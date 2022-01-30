@@ -116,19 +116,18 @@ submitStart.addEventListener('click', function () {
 // gameStart();
 
 
-//Подключение JSON
-const getData = () => fetch('https://jopandaverst.github.io/quiz/db.json')
-.then((res) => res.json())
-.then((res) => console.log(res))
-.then((res) => jsonData(data))
-.catch(error => console.log(error));
+fetch('/db.json')
+.then(function(res) {
+	return res.json();
+})
+.then(function(data) {
+	jsonData(data)
+})
 
-
-
-function jsonData({question, answers, correct}) {
-	console.log(question);
+function jsonData(items) {
+	console.log(items.items[0].id)
 }
-getData()
+
 
 function showQuestion(){
 	//вопрос
