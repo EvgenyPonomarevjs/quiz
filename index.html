@@ -8,11 +8,11 @@
 	<link rel="stylesheet" href="./css/main.css" />
 </head>
 <body>
-
+<div class="wrap">
+	<div id="app"></div>
 	<div class="quiz" id="quiz">
-
 		<div class="quiz-header" id="header">
-			<h2 class="title">Загружаем вопрос...</h2>
+			<h2 class="title">Тест на знание основ Javascript</h2>
 			<h2 class="title">%title%</h2>
 			<h3 class="summary">%message%</h3>
 			<p class="result">%result%</p>
@@ -36,7 +36,36 @@
 		<button class="quiz-submit submit" id="submit">Ответить</button>
 
 	</div>
-
+	<div class="modal-result-wrap">
+        <div id="overlay"></div>
+        <div id="modal-window">
+            <h2 id="content">Тест на знание основ Javascript</h2>
+			<h2 id="content1">Тест на знание основ Javascript</h2>
+				<div class="modal__window-list">
+				<ul class="modal__window-l" id="complexity-list">
+					<li>
+						<label>
+							<div class="complexity-list-item">							
+								<input type="radio" class="complexity-item" name="complexity-item" />
+								<span>Легкий уровень</span>
+							</div>
+							<div>							
+								<input type="radio" class="complexity-item" name="complexity-item" />
+								<span>Средний уровень</span>
+							</div>
+							<div>							
+								<input type="radio" class="complexity-item" name="complexity-item" />
+								<span>Сложный уровень</span>
+							</div>
+						</label>
+					</li>
+				</ul>	
+				</div>
+			<button id="submit-start">Начать тест</button>
+        </div>
+    </div>
+</div>
+	<script src="./db.json"></script>
 	<script src="./js/main.js"></script>
 </body>
 </html>
