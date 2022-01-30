@@ -117,11 +117,11 @@ submitStart.addEventListener('click', function () {
 
 
 //Подключение JSON
-const getData = () => fetch('https://jopandaverst.github.io/json')
+const getData = () => fetch('https://jopandaverst.github.io/quiz/db.json')
 .then((res) => res.json())
 .then((res) => console.log(res))
-.then((data) => jsonData(data))
-.catch(error => console.error(error));
+.then((res) => jsonData(data))
+.catch(error => console.log(error));
 
 
 
