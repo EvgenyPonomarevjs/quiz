@@ -1,119 +1,22 @@
-const questions = [
-// 	{
-// 		question: "Какой язык работает в браузере?",
-// 		answers: ["Java", "C", "Python", "JavaScript"],
-// 		correct: 4,
-// 	},
-// 	{
-// 		question: "Что означает CSS?",
-// 		answers: [
-// 			"Central Style Sheets",
-// 			"Cascading Style Sheets",
-// 			"Cascading Simple Sheets",
-// 			"Cars SUVs Sailboats",
-// 		],
-// 		correct: 2,
-// 	},
-// 	{
-// 		question: "Что означает HTML?",
-// 		answers: [
-// 			"Hypertext Markup Language",
-// 			"Hypertext Markdown Language",
-// 			"Hyperloop Machine Language",
-// 			"Helicopters Terminals Motorboats Lamborginis",
-// 		],
-// 		correct: 1,
-	// },
-	// {
-	// 	question: "В каком году был создан JavaScript?",
-	// 	answers: ["1996", "1995", "1994", "все ответы неверные"],
-	// 	correct: 2,
-	// },
-	// {
-	// 	question: "В чем отличие между локальной и глобальной переменной?",
-	// 	answers: [
-	// 	"Локальные можно переопределять, глобальные нельзя", 
-	// 	"Глобальные видны повсюду, локальные только в функциях", 
-	// 	"Глобальные можно переопределять, локальные нельзя", 
-	// 	"Локальные видны повсюду, глобальные только в функциях"],
-	// 	correct: 2,
-	// },
-	{
-		question: "Какое количество сообщений будет выведено в консоль?---------------------'for(var i = 10; i < 35; i += 5){console.log(i);}'",
-		answers: ["5", "10", "35", "8"],
-		correct: 1,
-	},
-	{
-		question: "Что такое условный оператор?",
-		answers: [
-		"Конструкция для создания определенной переменной", 
-		"Оператор сравнения значений", 
-		"Конструкция, что выполняет код несколько раз",],
-		correct: 2,
-	},
-	{
-		question: "Где верно указано имя переменной?",
-		answers: [
-		"let num-1;", 
-		"let 2num;", 
-		"let num_1;",
-		"let num;",
-		"let num",],
-		correct: 3,
-	},
-	{
-		question: "Где можно использовать JavaScript?",
-		answers: [
-		"Серверные приложения",
-		"Можно во всех перечисленных",
-		"Прикладное программное обеспечение",
-		"Мобильные приложения",
-		"Веб-приложения",],
-		correct: 2,
-	},
-];
-
 const headerConteiner = document.querySelector('#header');
 const listConteiner = document.querySelector('#list');
 const submitBtn = document.querySelector('#submit');
 const submitStart = document.querySelector('#submit-start');
 const modelClose = document.querySelector('.modal-result-wrap');
 const textJson1 = document.querySelector('.content1');
-
 let score = 0; //кол-во правльных ответов
 let questionIndex = 0; //тeкущий вопрос
 
+
 clearPage();
-showQuestion();
-submitBtn.onclick = checkAnswer;
-
 function clearPage(){
-headerConteiner.innerHTML = '';
-listConteiner.innerHTML = '';	
-}
-
-submitStart.addEventListener('click', function () {
-	console.log('click');
-	modelClose.className = 'model-close';
-});
+	headerConteiner.innerHTML = '';
+	listConteiner.innerHTML = '';	
+};
 
 
 
-// function newGame() {
-// 	clearPage();
-// 	const headerNewGame = `<h2 class="title">Тест на знание основ Javascript</h2>`;
-// 	headerConteiner.innerHTML = headerNewGame;
-// 	submitBtn.blur();
-// 	submitBtn.innerText = 'Начать тест';
-// };
 
-// function gameStart () {
-// 	submitBtn.onclick = () => {
-		
-// 	}
-// newGame();	
-// }
-// gameStart();
 
 
 fetch('/db.json')
@@ -123,20 +26,31 @@ fetch('/db.json')
 .then(function(data) {
 	jsonData(data)
 })
+// .catch(console.error('ERROR'));
 
-function jsonData(items) {
-	console.log(items.items[0].id)
-}
+function jsonData(i) {
+	showQuestion();
+	submitBtn.onclick = checkAnswer;
 
 
+//game start
 function showQuestion(){
-	//вопрос
-	questions[questionIndex]['question'];
-	const headerTemplate = `<h2 class="title">${questions[questionIndex]['question']}</h2>`;
+	submitStart.addEventListener('click', function () {
+		let complexity = document.querySelector('input[name="complex-item"]:checked').value;
+		console.log(complexity);
+		modelClose.className = 'model-close';
+		startTimer();
+	});
+
+
+
+//вопроc
+	i[questionIndex].question;
+	const headerTemplate = `<h2 class="title">${i[questionIndex].question}</h2>`;
 	headerConteiner.innerHTML = headerTemplate;
 
 	//ответ
-	for([index, answerText] of questions[questionIndex]['answers'].entries()) {
+	for([index, answerText] of i[questionIndex].answers.entries()) {
 		// console.log(answerText);
 		index++
 		const questionTemplate = 
@@ -146,31 +60,24 @@ function showQuestion(){
 				<span>%answer%</span>
 			</label>
 		</li>`;
-
 	const answerHTML = questionTemplate.replace('%answer%', answerText)
 	listConteiner.innerHTML += answerHTML;
 	}
 }
-
 function checkAnswer() {
 	const checkedRadio = listConteiner.querySelector('input[type="radio"]:checked')
 	// console.log(checkedRadio);
-
 	if (!checkedRadio) {
 		submitBtn.blur();
 		return
 	}
-
 	const userAnswer = parseInt(checkedRadio.value);
 	// console.log(userAnswer)
-
-	questions[questionIndex]['correct'];
-
-	if(userAnswer === questions[questionIndex]['correct']) {
+	i[questionIndex]['correct'];
+	if(userAnswer === i[questionIndex]['correct']) {
 		score++;
 	}
-
-	if (questionIndex === questions.length - 1) {
+	if (questionIndex === i.length - 1) {
 		// console.log("Последний вопрос");
 		clearPage();
 		showResults();
@@ -185,12 +92,12 @@ function checkAnswer() {
 
 function showResults() {
 	let title, message;
-	let result = `${score} из ${questions.length}`;
+	let result = `${score} из ${i.length}`;
 
-	if(score === questions.length) {
+	if(score === i.length) {
 		title = 'Поздравляем!!!';
 		message = "Вы ответили верно на все вопросы! "
-	} else if ((score * 100) / questions.length >= 50) {
+	} else if ((score * 100) / i.length >= 50) {
 		title = 'Не плохой результат! ';
 		message = "Вы дали больше половины правильных ответов! "	
 	} else {
@@ -208,38 +115,34 @@ function showResults() {
 	submitBtn.blur();
 	submitBtn.innerText = 'Начать заново';
 	submitBtn.onclick = () => history.go();
+	}
 }
 
 
-
-
-
-
-
 //Time
-const FULL_DASH_ARRAY = 283;
-const WARNING_THRESHOLD = 10;
-const ALERT_THRESHOLD = 5;
+const fullDashArra = 283;
+const WarningThreshold = 10; 
+const AlertThreshold = 5;
 
-const COLOR_CODES = {
+const Color_Codes = {
 	info: {
     color: "green"
 	},
 	warning: {
     color: "orange",
-    threshold: WARNING_THRESHOLD
+    threshold: WarningThreshold
 	},
 	alert: {
     color: "red",
-    threshold: ALERT_THRESHOLD
+    threshold: AlertThreshold
 	}
 };
 
-const TIME_LIMIT = 120;
+const Time_Limit = 120;
 let timePassed = 0;
-let timeLeft = TIME_LIMIT;
+let timeLeft = Time_Limit;
 let timerInterval = null;
-let remainingPathColor = COLOR_CODES.info.color;
+let remainingPathColor = Color_Codes.info.color;
 
 document.getElementById("app").innerHTML = `
 <div class="base-timer">
@@ -263,14 +166,13 @@ document.getElementById("app").innerHTML = `
 </div>
 `;
 
-startTimer();
 
 function onTimesUp() {clearInterval(timerInterval);}
 
 function startTimer() {
 	timerInterval = setInterval(() => {
     timePassed = timePassed += 1;
-    timeLeft = TIME_LIMIT - timePassed;
+    timeLeft = Time_Limit - timePassed;
     document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
     setCircleDasharray();
     setRemainingPathColor(timeLeft);
@@ -293,7 +195,7 @@ function formatTime(time) {
 }
 
 function setRemainingPathColor(timeLeft) {
-	const { alert, warning, info } = COLOR_CODES;
+	const { alert, warning, info } = Color_Codes;
 	if (timeLeft <= alert.threshold) {
     document
 	.getElementById("base-timer-path-remaining").classList.remove(warning.color);
@@ -305,12 +207,34 @@ function setRemainingPathColor(timeLeft) {
 }
 
 function calculateTimeFraction() {
-	const rawTimeFraction = timeLeft / TIME_LIMIT;
-	return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+	const rawTimeFraction = timeLeft / Time_Limit;
+	return rawTimeFraction - (1 / Time_Limit) * (1 - rawTimeFraction);
 }
 
 function setCircleDasharray() {
 	const circleDasharray = `${(
-    calculateTimeFraction() * FULL_DASH_ARRAY).toFixed(0)} 283`;
+    calculateTimeFraction() * fullDashArra).toFixed(0)} 283`;
 	document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);
 };
+
+
+
+
+
+
+
+
+
+
+
+		// if (complexity === 1) {
+		// 	const easyQuestions = complexity;
+		// 	console.log(easyQuestions);
+			
+		// } else if(complexity === 2) {
+		// 	const difficultQuestions = complexity;
+		// 	console.log(difficultQuestions);
+		// } else if(complexity === 3){
+		// 	const hardQuestions = complexity;
+		// 	console.log(hardQuestions);
+		// } 
