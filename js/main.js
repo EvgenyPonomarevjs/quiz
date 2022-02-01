@@ -19,7 +19,7 @@ function clearPage(){
 
 
 
-fetch('/db.json')
+fetch('https://jopandaverst.github.io/quiz/db.json')
 .then(function(res) {
 	return res.json();
 })
@@ -216,25 +216,3 @@ function setCircleDasharray() {
     calculateTimeFraction() * fullDashArra).toFixed(0)} 283`;
 	document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);
 };
-
-
-
-
-
-
-
-
-
-
-
-		// if (complexity === 1) {
-		// 	const easyQuestions = complexity;
-		// 	console.log(easyQuestions);
-			
-		// } else if(complexity === 2) {
-		// 	const difficultQuestions = complexity;
-		// 	console.log(difficultQuestions);
-		// } else if(complexity === 3){
-		// 	const hardQuestions = complexity;
-		// 	console.log(hardQuestions);
-		// } 
