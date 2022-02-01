@@ -6,7 +6,7 @@ const modelClose = document.querySelector('.modal-result-wrap');
 const textJson1 = document.querySelector('.content1');
 let score = 0; //кол-во правльных ответов
 let questionIndex = 0; //тeкущий вопрос
-
+let complexity;
 
 clearPage();
 function clearPage(){
@@ -36,13 +36,13 @@ function jsonData(i) {
 //game start
 function showQuestion(){
 	submitStart.addEventListener('click', function () {
-		let complexity = document.querySelector('input[name="complex-item"]:checked').value;
-		console.log(complexity);
+		let checkedComplexity = document.querySelector('input[name="complex-item"]:checked').value;
+		let checkedCompl = Number(checkedComplexity);
+		complexity = checkedCompl;
 		modelClose.className = 'model-close';
 		startTimer();
+		
 	});
-
-
 
 //вопроc
 	i[questionIndex].question;
